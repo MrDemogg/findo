@@ -1,6 +1,6 @@
 .field {
   width: 600px;
-  margin: 0 auto;
+  margin: 50px auto;
   height: 600px;
   border: 1px solid gray
 }
@@ -9,6 +9,7 @@
   height: 100px;
   background-color: black;
   display: inline-block;
+  box-shadow: 0px 0px 5px 5px white
 }
 .openedBlock {
   width: 100px;
