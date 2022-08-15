@@ -1,0 +1,20 @@
+.field {
+  width: 600px;
+  margin: 0 auto;
+  height: 600px;
+  border: 1px solid gray
+}
+.closedBlock {
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  display: inline-block;
+}
+.openedBlock {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+.hiddenO {
+  content: 'O'
+}
