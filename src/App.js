@@ -49,8 +49,10 @@ class App extends Component {
         super(props);
         this.state = null;
         this.openBlock = (index) => {
+            let field = this.state.field;
+            field[index].class = 'openedBlock'
             this.setState(() => {
-                return this.state.field[index].class = 'openedBlock'
+                return field
             })
         }
     }
@@ -75,6 +77,10 @@ class App extends Component {
                                             openBlock={this.openBlock}
                                         />
                                     );
+                                } else if (!this.state.notfirstAtt && index === 35) {
+                                    return 'Нажмите refresh для начала игры!'
+                                } else {
+                                    return ''
                                 }
                             }) : 'Нажмите refresh для начала игры!'
                     }
