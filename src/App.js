@@ -1,49 +1,96 @@
 import './App.css';
-import { Component } from 'react'
-import RenderClass from './components/RenderClass/RenderClass'
-class App extends Component {
-  state = {
-    field: [{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false},{class: 'closedBlock', keepO: false}],
+import {Component} from 'react';
+import RenderClass from './components/RenderClass/RenderClass';
+import randomChoiceO from './components/randomChoiceO/randomChoiceO';
+
+const mockData = {
+    field: [{class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }, {class: 'closedBlock', keepO: false}, {class: 'closedBlock', keepO: false}, {
+        class: 'closedBlock',
+        keepO: false
+    }],
     notfirstAtt: false
-  }
-  randomChoiceO = () => {
-    let notfirstAtt = this.state.notfirstAtt;
-    notfirstAtt = true;
-    this.setState({
-      notfirstAtt
-    })
-    const field = this.state.field;
-    let random = Math.floor(Math.random() * field.length)
-    for (let i = 0; i < field.length; i++) {
-      if (field[i].keepO) {
-        field[i].keepO = false;
-      }
+};
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = null;
+        this.openBlock = (index) => {
+            this.setState(() => {
+                return this.state.field[index].class = 'openedBlock'
+            })
+        }
     }
-    field[random].keepO = true
-    this.setState({
-      field
-    })
-  }
-  render() {
-    return (
-      <div className="game">
-        <div className="field">
-          {this.state.field.map((block, index) => {
-            if (this.state.notfirstAtt) {
-              return <RenderClass keepO={block.keepO} index={index} class={block.class}></RenderClass>
-            } else if (!this.state.notfirstAtt && index === 35){
-              return 'Нажмите refresh для начала игры!'
-            } else {
-              return ''
-            }
-          })}
-        </div>
-        <div className="menu">
-          <center><button className="menu__refresh-button" onClick={() => this.randomChoiceO()}>Refresh</button></center>
-        </div>
-      </div>
-    )
-  }
+
+    componentDidMount() {
+        this.setState(mockData)
+    }
+
+    render() {
+        return (
+            <div className="game">
+                <div className="field">
+                    {this.state ?
+                        this.state.field.map((block, index) => {
+                                if (this.state.notfirstAtt) {
+                                    return (
+                                        <RenderClass
+                                            key={index}
+                                            block={block}
+                                            index={index}
+                                            stateField={this.state}
+                                            openBlock={this.openBlock}
+                                        />
+                                    );
+                                }
+                            }) : 'Нажмите refresh для начала игры!'
+                    }
+                </div>
+                <div className="menu">
+                    <center>
+                        <button className="menu__refresh-button"
+                                onClick={() => {
+                                    this.setState(randomChoiceO(this.state))
+                                }}>Refresh
+                        </button>
+                    </center>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;

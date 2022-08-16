@@ -1,10 +1,26 @@
+import {Component} from 'react';
 
-const RendererClass = props => {
-    const blockClass = [props.class]
-    if (props.keepO) {
-        blockClass.push('hiddenO')
+class RendererClass extends Component {
+    constructor(props) {
+        super(props);
+        this.openBlock = () => {
+            props.openBlock(props.index)
+        };
     }
-    return <div className={blockClass.join(' ')} key={props.index} id={props.index}></div>
+
+    render() {
+        let blockClass = [this.props.block.class];
+        if (this.props.block.keepO) {
+            blockClass.push('hiddenO');
+        }
+        return (
+            <div
+                className={blockClass.join(' ')}
+                onClick={this.openBlock}
+            />
+        );
+    }
 }
+
 
 export default RendererClass;
