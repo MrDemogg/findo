@@ -1,6 +1,12 @@
 const randomChoiceO = (state) => {
     let field = state.field;
     let notfirstAtt = state.notfirstAtt;
+    let atts = state.atts;
+    let win = state.win;
+    let winText = state.winText
+    winText = ''
+    atts = 0
+    win = false
     console.log(notfirstAtt);
     notfirstAtt = true;
     console.log(notfirstAtt);
@@ -16,7 +22,10 @@ const randomChoiceO = (state) => {
     field[random].keepO = true;
     const returnObj = {
         field,
-        notfirstAtt
+        notfirstAtt,
+        atts,
+        win,
+        winText
     };
     return returnObj;
 };

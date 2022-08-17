@@ -41,19 +41,46 @@ const mockData = {
         class: 'closedBlock',
         keepO: false
     }],
-    notfirstAtt: false
+    notfirstAtt: false,
+    atts: 0,
+    win: false,
+    winText: ''
 };
 
 class App extends Component {
+    atts = 0;
+    winText = '';
     constructor(props) {
         super(props);
         this.state = null;
         this.openBlock = (index) => {
-            let field = this.state.field;
-            field[index].class = 'openedBlock'
+            console.log(this.state.field[index].class)
+            if (!this.state.win && this.state.field[index].class !== 'openedBlock') {
+                let field = this.state.field;
+                field[index].class = 'openedBlock'
+                console.log(index)
+                this.attCount(index)
+                this.setState(() => {
+                    return field
+                })
+            }
+        }
+        this.attCount = (index) => {
+            console.log(mockData.atts)
+            let atts = this.state.atts;
+            let win = this.state.win;
+            let winText = this.state.winText;
+            const field = this.state.field;
+            console.log(atts + '   ' + win + '   ' + winText + '   ' + field + '     ' + field[index].keepO)
+            if (field[index].keepO ) {
+                win = true
+            }
+            win ? winText = `Победа! "О" найдена за ${atts} попыток !` : atts++
             this.setState(() => {
-                return field
+                return {atts, winText, win}
             })
+            this.winText = winText
+            this.atts = atts
         }
     }
 
@@ -87,6 +114,8 @@ class App extends Component {
                 </div>
                 <div className="menu">
                     <center>
+                        <p>{this.winText}</p>
+                        <p>{this.atts} - попыток</p>
                         <button className="menu__refresh-button"
                                 onClick={() => {
                                     this.setState(randomChoiceO(this.state))
